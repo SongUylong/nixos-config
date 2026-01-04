@@ -14,7 +14,7 @@ config.status_update_interval = 1000
 config.font_size = 10
 config.color_scheme = "Catppuccin Macchiato"
 config.enable_tab_bar = true
-config.window_decorations = "RESIZE"
+config.window_decorations = "NONE"
 config.window_background_opacity = 1
 config.font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.window_close_confirmation = "AlwaysPrompt"

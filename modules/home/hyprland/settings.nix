@@ -2,8 +2,8 @@
 {
   wayland.windowManager.hyprland.settings = {
     input = {
-      kb_layout = "us";
-      kb_options = "caps:escape";
+      kb_layout = "us,kh";
+      kb_options = "caps:escape,grp:alt_shift_toggle";
       numlock_by_default = true;
       repeat_delay = 300;
       follow_mouse = 0;
@@ -18,8 +18,8 @@
     general = {
       "$mainMod" = "SUPER";
       layout = "dwindle";
-      gaps_in = 8;
-      gaps_out = 24;
+      gaps_in = 4;
+      gaps_out = 16;
       border_size = 2;
       "col.active_border" = "rgb(cba6f7) rgb(89b4fa) 45deg"; # Catppuccin Mocha: mauve & blue
       "col.inactive_border" = "0x00000000";

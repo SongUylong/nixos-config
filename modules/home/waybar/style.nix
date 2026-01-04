@@ -80,15 +80,19 @@ in
       padding: 1px;
     }
 
-    #pulseaudio, #network, #cpu, #memory, #disk, #battery, #language, #custom-notification, #custom-power-menu {
+    #pulseaudio, #network, #cpu, #memory, #disk, #battery, #bluetooth, #language, #custom-notification, #custom-power-menu, #custom-language {
       padding-left: 5px;
       padding-right: 5px;
       margin-right: 10px;
       color: ${text_color};
     }
 
-    #pulseaudio, #language, #custom-notification {
+    #pulseaudio, #custom-language, #custom-notification {
       margin-left: 15px;
+    }
+
+    #bluetooth {
+      margin-right: 15px;
     }
 
     #custom-power-menu {

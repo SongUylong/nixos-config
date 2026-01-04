@@ -35,13 +35,11 @@ in
     ];
     modules-center = [ "clock" ];
     modules-right = [
-      "cpu"
-      "memory"
-      (if (host == "desktop") then "disk" else "")
       "pulseaudio"
+      "bluetooth"
       "network"
       "battery"
-      "hyprland/language"
+      "custom/language"
       "custom/notification"
       "custom/power-menu"
     ];
@@ -82,34 +80,25 @@ in
         "5" = [ ];
       };
     };
-    cpu = {
-      format = "<span foreground='${green}'> </span> {usage}%";
-      format-alt = "<span foreground='${green}'> </span> {avg_frequency} GHz";
-      interval = 2;
-      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+    tray = {
+      icon-size = 16;
+      spacing = 6;
     };
-    memory = {
-      format = "<span foreground='${cyan}'>󰟜 </span>{}%";
-      format-alt = "<span foreground='${cyan}'>󰟜 </span>{used} GiB"; # 
-      interval = 2;
-      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
-    };
-    disk = {
-      # path = "/";
-      format = "<span foreground='${orange}'>󰋊 </span>{percentage_used}%";
-      interval = 60;
-      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+    bluetooth = {
+      format = "<span foreground='${border_color}'> </span>";
+      format-disabled = "<span foreground='${border_color}'> </span>";
+      format-connected = "<span foreground='${blue}'> </span>";
+      tooltip-format = "{controller_alias}\t{controller_address}";
+      tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{device_enumerate}";
+      tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
+      on-click = "blueman-manager";
     };
     network = {
-      format-wifi = "<span foreground='${magenta}'> </span> {signalStrength}%";
+      format-wifi = "<span foreground='${magenta}'> </span> {signalStrength}%";
       format-ethernet = "<span foreground='${magenta}'>󰀂 </span>";
       tooltip-format = "Connected to {essid} {ifname} via {gwaddr}";
       format-linked = "{ifname} (No IP)";
       format-disconnected = "<span foreground='${magenta}'>󰖪 </span>";
-    };
-    tray = {
-      icon-size = 16;
-      spacing = 6;
     };
     pulseaudio = {
       format = "{icon} {volume}%";
@@ -144,10 +133,19 @@ in
     "hyprland/language" = {
       tooltip = true;
       tooltip-format = "Keyboard layout";
-      format = "<span foreground='#FABD2F'> </span> {}";
-      format-fr = "FR";
+      format = "<span foreground='#FABD2F'> </span> {}";
       format-en = "US";
+      format-km = "KH";
+      format-kh = "KH";
       on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
+    };
+    "custom/language" = {
+      format = "<span foreground='#FABD2F'> </span> {}";
+      exec = "keyboard-layout";
+      interval = 1;
+      on-click = "hyprctl switchxkblayout at-translated-set-2-keyboard next";
+      tooltip = true;
+      tooltip-format = "Keyboard layout - Click to switch";
     };
     "custom/launcher" = {
       format = "";
@@ -180,7 +178,7 @@ in
     "custom/power-menu" = {
       tooltip = true;
       tooltip-format = "Power menu";
-      format = "<span foreground='${red}'> </span>";
+      format = "<span foreground='${red}'> </span>";
       on-click = "power-menu";
     };
   };

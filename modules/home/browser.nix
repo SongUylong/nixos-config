@@ -2,7 +2,23 @@
 {
   imports = [ inputs.zen-browser.homeModules.beta ];
 
-  programs.zen-browser.enable = true;
+  programs.zen-browser = {
+    enable = true;
+    policies = {
+      ExtensionSettings = {
+        # uBlock Origin
+        "uBlock0@raymondhill.net" = {
+          installation_mode = "force_installed";
+          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
+        };
+      };
+      # Disable Firefox's built-in tracking protection since uBlock handles it
+      DisableFirefoxStudies = true;
+      DisablePocket = true;
+      DisableTelemetry = true;
+      DontCheckDefaultBrowser = true;
+    };
+  };
 
   xdg.mimeApps =
     let

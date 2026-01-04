@@ -31,9 +31,11 @@
       "ALT, E, exec, hyprctl dispatch exec '[float; size 1111 700] nemo'"
       "$mainMod SHIFT, B, exec, toggle-waybar"
       "$mainMod, C ,exec, hyprpicker -a"
+      "$mainMod, S, exec, spotify"
       "$mainMod, W,exec, wallpaper-picker"
       "$mainMod SHIFT, W,exec, hyprctl dispatch exec '[float; size 925 615] waypaper'"
-      "$mainMod, N, exec, swaync-client -t -sw"
+      "$mainMod, N, exec, notion-app-enhanced"
+      "$mainMod SHIFT, N, exec, swaync-client -t -sw"
       "CTRL SHIFT, Escape, exec, hyprctl dispatch exec '[workspace 9] missioncenter'"
       "$mainMod, equal, exec, woomer"
 

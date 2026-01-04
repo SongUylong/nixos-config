@@ -14,6 +14,10 @@
       "DP-1,2560x1440@143.97Hz,auto,1.6"
     ];
 
+    settings.workspace = [
+      "1, monitor:HDMI-A-1, default:true"
+    ];
+
     extraConfig = ''
       # hyprlang noerror true
         source = ~/.config/hypr/monitors.conf

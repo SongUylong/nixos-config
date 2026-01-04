@@ -25,5 +25,8 @@
 
     ## AI Tools
     opencode
+
+    ## Code Editors
+    code-cursor
   ];
 }
