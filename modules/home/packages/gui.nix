@@ -2,8 +2,6 @@
 {
   home.packages = with pkgs; [
     ## Multimedia
-    audacity
-    gimp
     media-downloader
     obs-studio
     pavucontrol
@@ -11,7 +9,6 @@
     vlc
 
     ## Office
-    libreoffice
     gnome-calculator
 
     ## Utility
