@@ -185,7 +185,7 @@
     ripgrep       # faster grep
     fzf           # fuzzy finder
     zoxide        # directory jumper
-    poppler_utils # for PDF previews
+    poppler-utils # for PDF previews
     ffmpegthumbnailer # for video thumbnails
     imagemagick   # for image processing
   ];
