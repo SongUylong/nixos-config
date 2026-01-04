@@ -8,6 +8,8 @@
     nerd-fonts.symbols-only
     twemoji-color-font
     noto-fonts-color-emoji
+    noto-fonts
+    noto-fonts-cjk-sans
     fantasque-sans-mono
     maple-mono-custom
   ];
@@ -35,6 +37,13 @@
       name = "Bibata-Modern-Ice";
       package = pkgs.bibata-cursors;
       size = 24;
+    };
+  };
+
+  # Prefer dark mode for GTK apps (including Zen browser)
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
     };
   };
 

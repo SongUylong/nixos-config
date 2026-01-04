@@ -8,6 +8,13 @@
     
     # Additional packages needed for LazyVim
     extraPackages = with pkgs; [
+      # Lua runtime and tools (5.1 required for image.nvim)
+      lua5_1
+      luajitPackages.luarocks
+      
+      # Image support for image.nvim
+      imagemagick
+      
       # LSP servers
       lua-language-server
       nil # Nix LSP

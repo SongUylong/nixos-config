@@ -2,20 +2,20 @@
 let
   custom = {
     font = "Maple Mono";
-    font_size = "18px";
+    font_size = "14px";
     font_weight = "bold";
-    text_color = "#FBF1C7";
-    background_0 = "#1D2021";
-    background_1 = "#282828";
-    border_color = "#A89984";
-    red = "#CC241D";
-    green = "#98971A";
-    yellow = "#FABD2F";
-    blue = "#458588";
-    magenta = "#B16286";
-    cyan = "#689D6A";
-    orange = "#D65D0E";
-    orange_bright = "#FE8019";
+    text_color = "#cdd6f4"; # Catppuccin Mocha text
+    background_0 = "#1e1e2e"; # Catppuccin Mocha base
+    background_1 = "#181825"; # Catppuccin Mocha mantle
+    border_color = "#89b4fa"; # Catppuccin Mocha blue
+    red = "#f38ba8";
+    green = "#a6e3a1";
+    yellow = "#f9e2af";
+    blue = "#89b4fa";
+    magenta = "#cba6f7";
+    cyan = "#94e2d5";
+    orange = "#fab387";
+    orange_bright = "#fab387";
     opacity = "1";
     indicator_height = "2px";
   };
@@ -35,7 +35,7 @@ in
 
     window#waybar {
       background: ${background_1};
-      border-top: 1px solid ${border_color};
+      border-bottom: 1px solid ${border_color};
     }
 
     tooltip {
@@ -97,7 +97,7 @@ in
     }
 
     #custom-launcher {
-      font-size: 20px;
+      font-size: 16px;
       color: ${text_color};
       font-weight: bold;
       margin-left: 15px;

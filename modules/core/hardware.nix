@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   hardware = {
     graphics = {
@@ -10,6 +10,20 @@
         libvdpau-va-gl
       ];
     };
+
+    # NVIDIA GPU Configuration
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      powerManagement.finegrained = false;
+      open = false; # Use proprietary driver (not open-source kernel module)
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
   };
+
   hardware.enableRedistributableFirmware = true;
+
+  # Load NVIDIA driver for Xorg and Wayland
+  services.xserver.videoDrivers = [ "nvidia" ];
 }

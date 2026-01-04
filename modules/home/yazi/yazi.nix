@@ -5,10 +5,10 @@
     enableZshIntegration = true;
 
     settings = {
-      manager = {
+      mgr = {
         show_hidden = false;
         show_symlink = true;
-        sort_by = "modified";
+        sort_by = "mtime";
         sort_sensitive = false;
         sort_reverse = false;
         sort_dir_first = true;
@@ -47,7 +47,7 @@
     };
 
     theme = {
-      manager = {
+      mgr = {
         cwd = { fg = "#89dceb"; };
 
         # Hovered
@@ -167,7 +167,7 @@
     };
 
     keymap = {
-      manager.prepend_keymap = [
+      mgr.prepend_keymap = [
         { on = [ "l" ]; run = "plugin --sync smart-enter"; desc = "Enter directory or open file"; }
         { on = [ "<Enter>" ]; run = "plugin --sync smart-enter"; desc = "Enter directory or open file"; }
       ];

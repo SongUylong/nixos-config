@@ -35,6 +35,11 @@ require("lazy").setup({
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
+  lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json", -- use writable location for lockfile
+  rocks = {
+    enabled = true,
+    hererocks = false, -- disable hererocks, use system luarocks instead
+  },
   performance = {
     rtp = {
       -- disable some rtp plugins
@@ -51,3 +56,4 @@ require("lazy").setup({
     },
   },
 })
+

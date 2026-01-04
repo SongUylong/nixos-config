@@ -2,17 +2,25 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 
-config.enable_wayland = false
-config.font_size = 16
+-- Performance settings
+config.enable_wayland = true
+config.front_end = "WebGpu"
+config.webgpu_power_preference = "HighPerformance"
+config.max_fps = 120
+config.animation_fps = 120
+config.status_update_interval = 1000
+
+-- General settings
+config.font_size = 10
 config.color_scheme = "Catppuccin Macchiato"
 config.enable_tab_bar = true
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 1
 config.font = wezterm.font("CaskaydiaCove Nerd Font", { weight = "Regular", stretch = "Normal", style = "Normal" })
 config.window_close_confirmation = "AlwaysPrompt"
-config.harfbuzz_features = { "kern", "liga", "clig", "calt" }
-config.freetype_load_target = "Normal"
-config.freetype_render_target = "Normal"
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+config.freetype_load_target = "Light"
+config.freetype_render_target = "Light"
 config.scrollback_lines = 3000
 
 config.inactive_pane_hsb = {
@@ -20,69 +28,7 @@ config.inactive_pane_hsb = {
 	brightness = 0.5,
 }
 
--- Plugin: bar.wezterm
-
-local moon = "🌙"
-local bar = wezterm.plugin.require("https://github.com/adriankarlen/bar.wezterm")
-bar.apply_to_config(config, {
-	position = "top",
-	max_width = 22,
-	padding = { left = 1, right = 1 },
-	modules = {
-		leader = {
-			enabled = true,
-			icon = moon,
-			color = 4,
-		},
-		tab = {
-			enabled = true,
-			icon = wezterm.nerdfonts.oct_file_directory,
-			color = 2,
-		},
-		clock = {
-			enabled = true,
-			icon = wezterm.nerdfonts.fa_clock,
-			format = "%I:%M",
-		},
-		workspace = {
-			enabled = true,
-			icon = wezterm.nerdfonts.fa_briefcase,
-			color = 6,
-			format = function()
-				local name = wezterm.mux.get_active_workspace()
-				return string.format(" %s ", name)
-			end,
-		},
-		zoom = {
-			enabled = true,
-			icon = wezterm.nerdfonts.md_fullscreen,
-			color = 4,
-		},
-		pane = {
-			enabled = false,
-			icon = wezterm.nerdfonts.cod_multiple_windows,
-			color = 7,
-		},
-		username = {
-			enabled = false,
-			icon = wezterm.nerdfonts.fa_user,
-			color = 6,
-		},
-		hostname = {
-			enabled = false,
-			icon = wezterm.nerdfonts.cod_server,
-			color = 8,
-		},
-		cwd = {
-			enabled = true,
-			icon = wezterm.nerdfonts.oct_file_directory,
-			color = 7,
-		},
-	},
-})
-
-config.disable_default_mouse_bindings = false
-
+-- Colors (must be defined before tab_bar colors)
 config.colors = {
 	foreground = "#CBE0F0",
 	background = "#011423",
@@ -111,9 +57,113 @@ config.colors = {
 		"#24EAF7",
 		"#24EAF7",
 	},
+	tab_bar = {
+		background = "transparent",
+		active_tab = {
+			bg_color = "transparent",
+			fg_color = "#0FC5ED",
+		},
+		inactive_tab = {
+			bg_color = "transparent",
+			fg_color = "#24EAF7",
+		},
+		new_tab = {
+			bg_color = "transparent",
+			fg_color = "#44FFB1",
+		},
+	},
 }
 
-local act = wezterm.action
+-- Custom status bar configuration
+config.tab_bar_at_bottom = false
+config.use_fancy_tab_bar = false
+config.tab_max_width = 22
+
+-- Format tab titles
+wezterm.on("format-tab-title", function(tab, tabs, panes, conf, hover, max_width)
+	local title = tab.tab_index + 1 .. " " .. wezterm.nerdfonts.fa_long_arrow_right .. " "
+
+	if tab.active_pane.title then
+		title = title .. tab.active_pane.title
+	end
+
+	if #title > max_width then
+		title = wezterm.truncate_right(title, max_width - 1) .. "…"
+	end
+
+	return {
+		{ Text = " " .. title .. " " },
+	}
+end)
+
+-- Throttle status updates to prevent flickering
+local last_update = 0
+local update_interval = 1 -- seconds
+
+-- Left status (workspace, leader, zoom)
+wezterm.on("update-status", function(window, pane)
+	local now = os.time()
+	if now - last_update < update_interval and not window:leader_is_active() then
+		return
+	end
+	last_update = now
+
+	local left_cells = {}
+	local right_cells = {}
+
+	local palette = window:effective_config().resolved_palette
+
+	-- Left status: workspace/leader indicator
+	local workspace = window:active_workspace()
+	local leader_icon = "🌙"
+
+	if window:leader_is_active() then
+		table.insert(left_cells, { Foreground = { Color = palette.ansi[4] } })
+		table.insert(left_cells, { Text = " " .. leader_icon .. " " })
+	else
+		table.insert(left_cells, { Foreground = { Color = palette.ansi[6] } })
+		table.insert(left_cells, { Text = " " .. wezterm.nerdfonts.fa_briefcase .. " " .. workspace .. " " })
+	end
+
+	-- Check if zoomed
+	local panes_with_info = pane:tab():panes_with_info()
+	for _, p in ipairs(panes_with_info) do
+		if p.is_active and p.is_zoomed then
+			table.insert(left_cells, { Foreground = { Color = palette.ansi[4] } })
+			table.insert(left_cells, { Text = wezterm.nerdfonts.md_fullscreen .. " zoom " })
+		end
+	end
+
+	window:set_left_status(wezterm.format(left_cells))
+
+	-- Right status: cwd and clock
+	local cwd = pane:get_current_working_dir()
+	if cwd then
+		cwd = cwd.file_path:gsub(os.getenv("HOME"), "~")
+		local basename = cwd:match("([^/]+)/?$") or cwd
+		table.insert(right_cells, { Foreground = { Color = palette.ansi[7] } })
+		table.insert(right_cells, { Text = basename .. " " })
+		table.insert(right_cells, { Foreground = { Color = palette.brights[1] } })
+		table.insert(
+			right_cells,
+			{ Text = wezterm.nerdfonts.fa_long_arrow_left .. " " .. wezterm.nerdfonts.oct_file_directory .. " " }
+		)
+	end
+
+	local time = wezterm.time.now():format("%I:%M")
+	table.insert(right_cells, { Foreground = { Color = palette.ansi[5] } })
+	table.insert(right_cells, { Text = time .. " " })
+	table.insert(right_cells, { Foreground = { Color = palette.brights[1] } })
+	table.insert(
+		right_cells,
+		{ Text = wezterm.nerdfonts.fa_long_arrow_left .. " " .. wezterm.nerdfonts.fa_clock .. " " }
+	)
+
+	window:set_right_status(wezterm.format(right_cells))
+end)
+
+config.disable_default_mouse_bindings = false
+
 config.leader = { key = "w", mods = "ALT", timeout_milliseconds = math.maxinteger }
 
 config.keys = {

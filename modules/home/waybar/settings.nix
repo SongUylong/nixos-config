@@ -2,7 +2,7 @@
 let
   custom = {
     font = "Maple Mono";
-    font_size = "18px";
+    font_size = "14px";
     font_weight = "bold";
     text_color = "#FBF1C7";
     background_0 = "#1D2021";
@@ -21,9 +21,9 @@ let
 in
 {
   programs.waybar.settings.mainBar = with custom; {
-    position = "bottom";
+    position = "top";
     layer = "top";
-    height = 28;
+    height = 24;
     margin-top = 0;
     margin-bottom = 0;
     margin-left = 0;
@@ -108,8 +108,8 @@ in
       format-disconnected = "<span foreground='${magenta}'>󰖪 </span>";
     };
     tray = {
-      icon-size = 20;
-      spacing = 8;
+      icon-size = 16;
+      spacing = 6;
     };
     pulseaudio = {
       format = "{icon} {volume}%";

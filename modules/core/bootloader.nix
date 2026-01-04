@@ -6,18 +6,27 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      
+      timeout = 5;
+
       grub = {
         enable = true;
         device = "nodev";
         efiSupport = true;
-        useOSProber = true;  # Automatically detect other operating systems
+        useOSProber = true;
         configurationLimit = 5;
-        theme = pkgs.nixos-grub2-theme;
+        theme = pkgs.catppuccin-grub;
+        # Increase timeout to select OS
+        gfxmodeEfi = "2560x1440";
       };
     };
 
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "ntfs" ];
+
+    # Hibernate support
+    resumeDevice = "/dev/disk/by-uuid/b4c132d2-c0c2-4991-a3bd-32d04f62c370";
   };
+
+  # Ensure os-prober can detect Windows
+  services.gvfs.enable = true;
 }

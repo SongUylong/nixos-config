@@ -1,6 +1,9 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
+    ## Compiler
+    gcc
+
     ## Lsp
     nixd # nix
 
