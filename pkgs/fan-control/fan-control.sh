@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
 
+# Find the correct hwmon device (nct6795 chip) dynamically
+HWMON_PATH=""
+for hwmon in /sys/class/hwmon/hwmon*; do
+    if [ "$(cat "$hwmon/name" 2>/dev/null)" = "nct6795" ]; then
+        HWMON_PATH="$hwmon"
+        break
+    fi
+done
+
+if [ -z "$HWMON_PATH" ]; then
+    echo "Error: Could not find nct6795 hwmon device"
+    exit 1
+fi
+
 # Get current PWM value
-current_pwm=$(cat /sys/class/hwmon/hwmon2/pwm6 2>/dev/null || echo "Unknown")
-current_rpm=$(cat /sys/class/hwmon/hwmon2/fan6_input 2>/dev/null || echo "Unknown")
+current_pwm=$(cat "$HWMON_PATH/pwm6" 2>/dev/null || echo "Unknown")
+current_rpm=$(cat "$HWMON_PATH/fan6_input" 2>/dev/null || echo "Unknown")
 
 echo "Current Fan Status:"
 echo "  PWM: $current_pwm / 255 ($(( current_pwm * 100 / 255 ))%)"
@@ -24,11 +38,11 @@ fi
 
 # Set PWM value
 echo "Setting PWM to $new_pwm..."
-sudo bash -c "echo 1 > /sys/class/hwmon/hwmon2/pwm6_enable && echo $new_pwm > /sys/class/hwmon/hwmon2/pwm6"
+sudo bash -c "echo 1 > $HWMON_PATH/pwm6_enable && echo $new_pwm > $HWMON_PATH/pwm6"
 
 if [ $? -eq 0 ]; then
     sleep 1
-    new_rpm=$(cat /sys/class/hwmon/hwmon2/fan6_input 2>/dev/null || echo "Unknown")
+    new_rpm=$(cat "$HWMON_PATH/fan6_input" 2>/dev/null || echo "Unknown")
     echo "Success! Fan speed set to $new_pwm PWM (~$new_rpm RPM)"
 else
     echo "Error: Failed to set fan speed"

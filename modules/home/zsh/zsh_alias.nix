@@ -9,6 +9,7 @@
       cat = "bat";
       nano = "micro";
       code = "codium";
+      o = "opencode";
       diff = "delta --diff-so-fancy --side-by-side";
       less = "bat";
       copy = "wl-copy";

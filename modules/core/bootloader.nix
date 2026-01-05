@@ -6,7 +6,7 @@
         canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
-      timeout = 5;
+      timeout = null;
 
       grub = {
         enable = true;

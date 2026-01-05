@@ -58,7 +58,8 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 1 > /sys/class/hwmon/hwmon2/pwm6_enable && echo 135 > /sys/class/hwmon/hwmon2/pwm6'";
+      # Find the correct hwmon device for nct6775 and set PWM
+      ExecStart = "${pkgs.bash}/bin/bash -c 'for hwmon in /sys/class/hwmon/hwmon*; do if [ -f $hwmon/pwm6_enable ]; then echo 1 > $hwmon/pwm6_enable && echo 135 > $hwmon/pwm6; break; fi; done'";
     };
   };
 }
