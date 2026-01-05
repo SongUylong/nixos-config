@@ -45,6 +45,9 @@
       ",Print, exec, screenshot --copy && screenshot --save"
       "SHIFT, Print, exec, screenshot --swappy"
 
+      # screen recording
+      "$mainMod SHIFT, R, exec, screen-record"
+
       # switch focus
       "$mainMod, left,  movefocus, l"
       "$mainMod, right, movefocus, r"
