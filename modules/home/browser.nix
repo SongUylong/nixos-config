@@ -17,6 +17,26 @@
       DisablePocket = true;
       DisableTelemetry = true;
       DontCheckDefaultBrowser = true;
+      
+      # Restore previous session on startup
+      Preferences = {
+        "browser.startup.page" = {
+          Value = 3;
+          Status = "locked";
+        };
+        "browser.sessionstore.persist_closed_tabs_between_sessions" = {
+          Value = true;
+          Status = "locked";
+        };
+        "browser.sessionstore.closedTabsFromAllWindows" = {
+          Value = true;
+          Status = "locked";
+        };
+        "browser.sessionstore.closedTabsFromClosedWindows" = {
+          Value = true;
+          Status = "locked";
+        };
+      };
     };
   };
 

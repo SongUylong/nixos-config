@@ -13,7 +13,6 @@ in
 
     ## Office
     gnome-calculator
-    notion-app-enhanced
 
     ## Communication
     telegram-desktop
