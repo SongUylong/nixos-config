@@ -3,12 +3,13 @@
 # Prompt for search query using rofi with clean minimal styling
 query=$(rofi -dmenu -p " " -theme-str '
     window {
-        width: 600px;
-        height: 60px;
-        border: 2px;
+        width: 700px;
+        height: 80px;
+        border: 3px;
         border-color: #89b4fa;
         background-color: #1e1e2e;
         location: center;
+        border-radius: 12px;
     }
     mainbox {
         background-color: #1e1e2e;
@@ -17,22 +18,25 @@ query=$(rofi -dmenu -p " " -theme-str '
     inputbar {
         children: [prompt, entry];
         background-color: #1e1e2e;
-        padding: 12px;
+        padding: 16px;
+        spacing: 12px;
     }
     prompt {
         background-color: #a6e3a1;
-        padding: 8px 12px;
+        padding: 12px 16px;
         text-color: #1e1e2e;
-        font: "Maple Mono Bold 14";
+        font: "Maple Mono Bold 16";
         enabled: true;
+        border-radius: 8px;
     }
     entry {
-        padding: 8px 12px;
+        padding: 12px 16px;
         text-color: #cdd6f4;
         background-color: #181825;
-        font: "Maple Mono 14";
+        font: "Maple Mono 16";
         placeholder: "Search the web...";
         placeholder-color: #6c7086;
+        border-radius: 8px;
     }
     listview {
         enabled: false;
