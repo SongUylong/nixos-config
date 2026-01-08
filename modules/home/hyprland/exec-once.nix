@@ -17,7 +17,7 @@
     "hyprctl setcursor Bibata-Modern-Ice 24 &"
     "init-wallpaper &"
 
-    "[workspace 1 silent] zen-beta"
+    "[workspace 1 silent] firefox"
     "[workspace 2 silent] wezterm"
   ];
 }

@@ -1,8 +1,6 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 {
-  imports = [ inputs.zen-browser.homeModules.beta ];
-
-  programs.zen-browser = {
+  programs.firefox = {
     enable = true;
     policies = {
       ExtensionSettings = {
@@ -40,36 +38,20 @@
     };
   };
 
-  xdg.mimeApps =
-    let
-      value =
-        let
-          system = pkgs.stdenv.hostPlatform.system;
-          zen-browser = inputs.zen-browser.packages.${system}.beta;
-        in
-        zen-browser.meta.desktopFileName;
-
-      associations = builtins.listToAttrs (
-        map (name: { inherit name value; }) [
-          "application/x-extension-shtml"
-          "application/x-extension-xhtml"
-          "application/x-extension-html"
-          "application/x-extension-xht"
-          "application/x-extension-htm"
-          "x-scheme-handler/unknown"
-          "x-scheme-handler/mailto"
-          "x-scheme-handler/chrome"
-          "x-scheme-handler/about"
-          "x-scheme-handler/https"
-          "x-scheme-handler/http"
-          "application/xhtml+xml"
-          "application/json"
-          "text/html"
-        ]
-      );
-    in
-    {
-      associations.added = associations;
-      defaultApplications = associations;
+  xdg.mimeApps = {
+    associations.added = {
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
     };
+    defaultApplications = {
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
+    };
+  };
 }

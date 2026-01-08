@@ -499,7 +499,7 @@ Essential system utilities and helpers.
 
 ### Web Browser
 
-- **zen-browser** - Firefox-based browser
+- **firefox** - Privacy-focused web browser
 
 ### Multimedia
 

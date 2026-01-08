@@ -404,11 +404,11 @@ Toggle: `Super + Shift + B`
 
 ## Web Browsing
 
-### Zen Browser
+### Firefox
 
-- Firefox-based privacy-focused browser
+- Privacy-focused web browser
 - Launch: `Super + B` (opens on workspace 1)
-- Or from Rofi: `Super + D` → type "zen"
+- Or from Rofi: `Super + D` → type "firefox"
 
 #### Default for
 

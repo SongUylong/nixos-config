@@ -12,7 +12,7 @@
       # keybindings
       "$mainMod, Return, exec, wezterm"
       "ALT, Return, exec, [float; size 1111 700] wezterm"
-      "$mainMod, B, exec, [workspace 1 silent] zen-beta"
+      "$mainMod, B, exec, [workspace 1 silent] firefox"
       "$mainMod, Q, killactive,"
       "$mainMod, F, fullscreen, 1"
       "$mainMod ALT, F, fullscreen, 0"
@@ -34,7 +34,7 @@
       "$mainMod, S, exec, spotify"
       "$mainMod, W,exec, wallpaper-picker"
       "$mainMod SHIFT, W,exec, hyprctl dispatch exec '[float; size 925 615] waypaper'"
-      "$mainMod, N, exec, zen-beta https://www.notion.so"
+      "$mainMod, N, exec, firefox https://www.notion.so"
       "$mainMod SHIFT, N, exec, swaync-client -t -sw"
       "CTRL SHIFT, Escape, exec, hyprctl dispatch exec '[workspace 9] missioncenter'"
       "$mainMod, equal, exec, woomer"

@@ -48,5 +48,5 @@ query=$(rofi -dmenu -p " " -theme-str '
 
 # If user entered something, search with Zen Browser
 if [ -n "$query" ]; then
-    zen-beta --search "$query"
+    firefox --search "$query"
 fi
