@@ -24,7 +24,6 @@
       "opacity 1.0 override 1.0 override, class:(Unity)"
       "opacity 1.0 override 1.0 override, class:(firefox)"
       "opacity 1.0 override 1.0 override, class:(evince)"
-      "workspace 1, class:^(firefox)$"
       "workspace 3, class:^(evince)$"
       "workspace 4, class:^(Gimp-2.10)$"
       "workspace 5, class:^(Spotify)$"

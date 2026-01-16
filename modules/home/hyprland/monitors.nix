@@ -11,7 +11,7 @@
       "HDMI-A-1,1920x1080@60,auto-left,1.25"
       # "HDMI-A-1,1920x1080@60,auto,1.25,transform,3"
       # "HDMI-A-1,disable"
-      "DP-1,2560x1440@143.97Hz,auto,1.6"
+      "DP-3,2560x1440@143.97Hz,auto,1.6"
     ];
 
     settings.workspace = [

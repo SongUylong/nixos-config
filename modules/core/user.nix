@@ -31,6 +31,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "docker" # Add "docker" to this list for docker to work
     ];
     shell = pkgs.zsh;
   };
